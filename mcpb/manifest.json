@@ -1,0 +1,93 @@
+{
+  "manifest_version": "0.3",
+  "name": "renderbase",
+  "display_name": "Renderbase - Document Generation",
+  "version": "1.0.0",
+  "description": "Generate PDFs and Excel documents with AI. Connect your templates, draft new ones, and generate documents through natural conversation.",
+  "author": {
+    "name": "Renderbase",
+    "email": "support@renderbase.dev",
+    "url": "https://www.renderbase.dev"
+  },
+  "homepage": "https://www.renderbase.dev/mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renderbase/renderbase.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pdf",
+    "document-generation",
+    "excel",
+    "templates",
+    "invoice",
+    "reports",
+    "automation"
+  ],
+  "categories": [
+    "productivity",
+    "developer-tools",
+    "business"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"]
+    },
+    "runtime": {
+      "node": ">=18.0.0"
+    }
+  },
+  "user_config": {
+    "properties": {
+      "RENDERBASE_USER_TOKEN": {
+        "type": "string",
+        "title": "Personal Access Token",
+        "description": "Your Renderbase Personal Access Token (PAT). Get one from: Settings → Personal Access Tokens in your Renderbase dashboard.",
+        "required": true,
+        "secret": true,
+        "pattern": "^pat_[a-zA-Z0-9]+$",
+        "placeholder": "pat_xxxxxxxxxxxxxxxx"
+      },
+      "RENDERBASE_API_URL": {
+        "type": "string",
+        "title": "API URL (Optional)",
+        "description": "Custom API URL. Leave empty for production (api.renderbase.dev).",
+        "required": false,
+        "default": "https://api.renderbase.dev/api"
+      }
+    }
+  },
+  "tools": {
+    "count": 13,
+    "examples": [
+      {
+        "name": "list_templates",
+        "description": "List all your document templates"
+      },
+      {
+        "name": "generate_pdf",
+        "description": "Generate a PDF from a template with your data"
+      },
+      {
+        "name": "draft_template",
+        "description": "Create a new template design with AI assistance"
+      }
+    ]
+  },
+  "safety": {
+    "data_access": "user_data",
+    "network_access": true,
+    "filesystem_access": false,
+    "annotations": [
+      "Accesses Renderbase API with user-provided credentials",
+      "Generates documents based on user templates and data",
+      "Does not access local filesystem",
+      "All generated documents are stored in user's Renderbase account"
+    ]
+  },
+  "privacy_policy": "https://www.renderbase.dev/privacy",
+  "terms_of_service": "https://www.renderbase.dev/terms"
+}

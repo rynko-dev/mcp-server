@@ -1,0 +1,55 @@
+{
+  "name": "@renderbase/mcp-server",
+  "version": "1.0.0",
+  "description": "Renderbase MCP server for Claude Desktop - manage templates and generate documents through natural conversation",
+  "main": "dist/index.js",
+  "bin": {
+    "renderbase-mcp": "./dist/index.js"
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src --ext .ts",
+    "clean": "rimraf dist",
+    "build:mcpb": "bash scripts/build-mcpb.sh"
+  },
+  "keywords": [
+    "renderbase",
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "claude-desktop",
+    "pdf",
+    "document-generation",
+    "templates"
+  ],
+  "author": "Renderbase",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renderbase/renderbase.git",
+    "directory": "integrations/mcp-server"
+  },
+  "homepage": "https://docs.renderbase.dev/integrations/mcp-integration",
+  "bugs": {
+    "url": "https://github.com/renderbase/renderbase/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.0"
+  }
+}
