@@ -1,6 +1,6 @@
 {
   "name": "@renderbase/mcp-server",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Renderbase MCP server for Claude Desktop - manage templates and generate documents through natural conversation",
   "main": "dist/index.js",
   "bin": {
