@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Build script for Renderbase MCPB bundle
+# Build script for Rynko MCPB bundle
 # Creates a .mcpb file for one-click installation in Claude Desktop
 #
 
@@ -11,9 +11,9 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 BUILD_DIR="$PROJECT_DIR/mcpb-build"
 DIST_DIR="$PROJECT_DIR/dist-mcpb"
 VERSION=$(node -p "require('$PROJECT_DIR/package.json').version")
-BUNDLE_NAME="renderbase-mcp-$VERSION.mcpb"
+BUNDLE_NAME="rynko-mcp-$VERSION.mcpb"
 
-echo "Building Renderbase MCP Bundle v$VERSION"
+echo "Building Rynko MCP Bundle v$VERSION"
 echo "=========================================="
 
 # Clean previous builds
@@ -48,7 +48,7 @@ cd "$BUILD_DIR"
 zip -r "$DIST_DIR/$BUNDLE_NAME" .
 
 # Also create a .zip version for platforms that don't recognize .mcpb
-cp "$DIST_DIR/$BUNDLE_NAME" "$DIST_DIR/renderbase-mcp-$VERSION.zip"
+cp "$DIST_DIR/$BUNDLE_NAME" "$DIST_DIR/rynko-mcp-$VERSION.zip"
 
 # Calculate checksums
 echo "Calculating checksums..."

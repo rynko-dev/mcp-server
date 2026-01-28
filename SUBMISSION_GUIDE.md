@@ -1,12 +1,12 @@
 # Claude Desktop Extensions Directory Submission Guide
 
-This guide covers how to submit the Renderbase MCP server to the Claude Desktop Extensions directory for one-click installation.
+This guide covers how to submit the Rynko MCP server to the Claude Desktop Extensions directory for one-click installation.
 
 ## Prerequisites
 
 1. **Built and tested MCPB bundle**: Run `npm run build:mcpb`
-2. **Privacy Policy**: Published at https://www.renderbase.dev/privacy
-3. **Terms of Service**: Published at https://www.renderbase.dev/terms
+2. **Privacy Policy**: Published at https://www.rynko.dev/privacy
+3. **Terms of Service**: Published at https://www.rynko.dev/terms
 4. **Extension icon**: 512x512 PNG at `mcpb/icon.png`
 
 ## Submission Checklist
@@ -15,19 +15,19 @@ This guide covers how to submit the Renderbase MCP server to the Claude Desktop 
 
 | Field | Value |
 |-------|-------|
-| Extension Name | Renderbase - Document Generation |
+| Extension Name | Rynko - Document Generation |
 | Short Description | Generate PDFs and Excel documents with AI |
-| Publisher | Renderbase |
+| Publisher | Rynko |
 | Category | Productivity, Developer Tools, Business |
-| Website | https://www.renderbase.dev |
-| Documentation | https://docs.renderbase.dev/integrations/mcp-integration |
-| Support Email | support@renderbase.dev |
-| GitHub Repository | https://github.com/renderbase/renderbase |
+| Website | https://www.rynko.dev |
+| Documentation | https://docs.rynko.dev/integrations/mcp-integration |
+| Support Email | support@rynko.dev |
+| GitHub Repository | https://github.com/rynko/rynko |
 
 ### Safety Annotations
 
 - **Data Access**: `user_data` - Accesses user's templates and documents
-- **Network Access**: `true` - Connects to Renderbase API
+- **Network Access**: `true` - Connects to Rynko API
 - **Filesystem Access**: `false` - Does not access local files
 - **Credentials**: Requires user-provided Personal Access Token (PAT)
 
@@ -36,9 +36,9 @@ This guide covers how to submit the Renderbase MCP server to the Claude Desktop 
 #### Example 1: List Templates
 
 ```
-User: "What templates do I have in Renderbase?"
+User: "What templates do I have in Rynko?"
 
-Claude: I'll check your Renderbase templates for you.
+Claude: I'll check your Rynko templates for you.
 
 [Uses list_templates tool]
 
@@ -67,7 +67,7 @@ Claude: I'll generate that invoice for you using your Invoice Template.
 ]
 
 Done! Your invoice has been generated. Here's the download link:
-https://app.renderbase.dev/documents/doc_abc123
+https://app.rynko.dev/documents/doc_abc123
 ```
 
 #### Example 3: Create a Template
@@ -85,7 +85,7 @@ Claude: I'll create a receipt template for you.
 ]
 
 I've created a draft template called "Receipt Template". You can:
-1. Preview it in your Renderbase dashboard
+1. Preview it in your Rynko dashboard
 2. Make adjustments using the visual editor
 3. Publish it when ready
 
@@ -103,7 +103,7 @@ npm run build:mcpb
 ```
 
 Verify the bundle:
-- Check `dist-mcpb/renderbase-mcp-{version}.mcpb` exists
+- Check `dist-mcpb/rynko-mcp-{version}.mcpb` exists
 - Test locally in Claude Desktop
 
 ### Step 2: Create Extension Listing Assets
@@ -168,12 +168,12 @@ To update the extension:
 
 ### Directory Listing Copy
 
-**Title**: Renderbase - Document Generation
+**Title**: Rynko - Document Generation
 
 **Tagline**: Generate PDFs and Excel documents with AI
 
 **Full Description**:
-Transform your document workflows with Renderbase. Generate professional PDFs, Excel spreadsheets, and reports through natural conversation with Claude.
+Transform your document workflows with Rynko. Generate professional PDFs, Excel spreadsheets, and reports through natural conversation with Claude.
 
 **Key Features**:
 - Generate invoices, contracts, reports instantly
@@ -190,7 +190,7 @@ Transform your document workflows with Renderbase. Generate professional PDFs, E
 ### Social Announcement Template
 
 ```
-Renderbase is now on Claude Desktop!
+Rynko is now on Claude Desktop!
 
 Generate PDFs and Excel documents through conversation:
 - "Create an invoice for $1,500"
@@ -198,11 +198,11 @@ Generate PDFs and Excel documents through conversation:
 - "Draft a new contract template"
 
 Install in one click from the Extensions directory.
-https://www.renderbase.dev/mcp
+https://www.rynko.dev/mcp
 ```
 
 ## Support
 
 For submission questions:
-- Email: support@renderbase.dev
-- GitHub: https://github.com/renderbase/renderbase/issues
+- Email: support@rynko.dev
+- GitHub: https://github.com/rynko/rynko/issues

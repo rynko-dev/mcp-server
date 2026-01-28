@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 
 /**
- * Renderbase MCP Server
+ * Rynko MCP Server
  *
  * Model Context Protocol server for Claude Desktop integration.
  * Enables AI assistants to manage templates and generate documents
  * through natural conversation.
  *
  * Usage:
- *   RENDERBASE_USER_TOKEN=pat_xxx npx @renderbase/mcp-server
+ *   RYNKO_USER_TOKEN=pat_xxx npx @rynko/mcp-server
  *
  * Or configure in Claude Desktop's config file:
  *   {
  *     "mcpServers": {
- *       "renderbase": {
+ *       "rynko": {
  *         "command": "npx",
- *         "args": ["-y", "@renderbase/mcp-server"],
+ *         "args": ["-y", "@rynko/mcp-server"],
  *         "env": {
- *           "RENDERBASE_USER_TOKEN": "pat_xxxxxxxxxxxxxxxx"
+ *           "RYNKO_USER_TOKEN": "pat_xxxxxxxxxxxxxxxx"
  *         }
  *       }
  *     }
@@ -32,35 +32,35 @@ import {
   ErrorCode,
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
-import { RenderbaseClient } from './client.js';
+import { RynkoClient } from './client.js';
 
 // Get configuration from environment
-const RENDERBASE_USER_TOKEN = process.env.RENDERBASE_USER_TOKEN;
-const RENDERBASE_API_URL = process.env.RENDERBASE_API_URL;
+const RYNKO_USER_TOKEN = process.env.RYNKO_USER_TOKEN;
+const RYNKO_API_URL = process.env.RYNKO_API_URL;
 
 // Validate token
-if (!RENDERBASE_USER_TOKEN) {
-  console.error('Error: RENDERBASE_USER_TOKEN environment variable is required');
+if (!RYNKO_USER_TOKEN) {
+  console.error('Error: RYNKO_USER_TOKEN environment variable is required');
   console.error('');
-  console.error('Get a Personal Access Token from your Renderbase dashboard:');
+  console.error('Get a Personal Access Token from your Rynko dashboard:');
   console.error('  Settings → Personal Access Tokens → Create Token');
   console.error('');
   console.error('Then set it in your environment or Claude Desktop config.');
   process.exit(1);
 }
 
-if (!RENDERBASE_USER_TOKEN.startsWith('pat_')) {
+if (!RYNKO_USER_TOKEN.startsWith('pat_')) {
   console.error('Error: Invalid token format. Token must start with "pat_"');
   process.exit(1);
 }
 
 // Initialize API client
-const client = new RenderbaseClient(RENDERBASE_USER_TOKEN, RENDERBASE_API_URL);
+const client = new RynkoClient(RYNKO_USER_TOKEN, RYNKO_API_URL);
 
 // Create MCP server
 const server = new Server(
   {
-    name: 'renderbase-mcp',
+    name: 'rynko-mcp',
     version: '1.0.0',
   },
   {
@@ -142,17 +142,17 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
  * Main entry point
  */
 async function main() {
-  // Verify connection to Renderbase API
+  // Verify connection to Rynko API
   try {
     await client.getServerInfo();
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
-    console.error(`Failed to connect to Renderbase API: ${message}`);
+    console.error(`Failed to connect to Rynko API: ${message}`);
     console.error('');
     console.error('Please check:');
     console.error('  1. Your token is valid and not expired');
     console.error('  2. You have network connectivity');
-    console.error('  3. The Renderbase API is accessible');
+    console.error('  3. The Rynko API is accessible');
     process.exit(1);
   }
 

@@ -1,10 +1,10 @@
 {
-  "name": "@renderbase/mcp-server",
+  "name": "@rynko/mcp-server",
   "version": "1.0.3",
-  "description": "Renderbase MCP server for Claude Desktop - manage templates and generate documents through natural conversation",
+  "description": "Rynko MCP server for Claude Desktop - manage templates and generate documents through natural conversation",
   "main": "dist/index.js",
   "bin": {
-    "renderbase-mcp": "./dist/index.js"
+    "rynko-mcp": "dist/index.js"
   },
   "types": "dist/index.d.ts",
   "files": [
@@ -21,7 +21,7 @@
     "build:mcpb": "bash scripts/build-mcpb.sh"
   },
   "keywords": [
-    "renderbase",
+    "rynko",
     "mcp",
     "model-context-protocol",
     "claude",
@@ -30,16 +30,15 @@
     "document-generation",
     "templates"
   ],
-  "author": "Renderbase",
+  "author": "Rynko",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/renderbase/renderbase.git",
-    "directory": "integrations/mcp-server"
+    "url": "https://github.com/rynko-dev/mcp-server.git"
   },
-  "homepage": "https://docs.renderbase.dev/integrations/mcp-integration",
+  "homepage": "https://docs.rynko.dev/integrations/mcp-integration",
   "bugs": {
-    "url": "https://github.com/renderbase/renderbase/issues"
+    "url": "https://github.com/rynko-dev/mcp-server/issues"
   },
   "engines": {
     "node": ">=18.0.0"

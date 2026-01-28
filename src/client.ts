@@ -1,7 +1,7 @@
 /**
- * Renderbase API Client
+ * Rynko API Client
  *
- * HTTP client for communicating with the Renderbase MCP Documents API.
+ * HTTP client for communicating with the Rynko MCP Documents API.
  */
 
 export interface McpToolCallResponse {
@@ -35,13 +35,13 @@ export interface ServerInfo {
   };
 }
 
-export class RenderbaseClient {
+export class RynkoClient {
   private readonly baseUrl: string;
   private readonly token: string;
 
   constructor(token: string, baseUrl?: string) {
     this.token = token;
-    this.baseUrl = baseUrl || 'https://api.renderbase.dev/api';
+    this.baseUrl = baseUrl || 'https://api.rynko.dev/api';
   }
 
   /**
@@ -79,7 +79,7 @@ export class RenderbaseClient {
   }
 
   /**
-   * Make an HTTP request to the Renderbase API
+   * Make an HTTP request to the Rynko API
    */
   private async request<T>(
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -91,7 +91,7 @@ export class RenderbaseClient {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.token}`,
-      'User-Agent': '@renderbase/mcp-server/1.0.0',
+      'User-Agent': '@rynko/mcp-server/1.0.0',
     };
 
     const options: RequestInit = {
@@ -116,7 +116,7 @@ export class RenderbaseClient {
         errorMessage = errorText || `HTTP ${response.status}`;
       }
 
-      throw new Error(`Renderbase API error: ${errorMessage}`);
+      throw new Error(`Rynko API error: ${errorMessage}`);
     }
 
     return response.json() as Promise<T>;

@@ -1,6 +1,6 @@
-# @renderbase/mcp-server
+# @rynko/mcp-server
 
-Renderbase MCP server for Claude Desktop - manage templates and generate documents through natural conversation.
+Rynko MCP server for Claude Desktop - manage templates and generate documents through natural conversation.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Renderbase MCP server for Claude Desktop - manage templates and generate documen
 
 Or install from the `.mcpb` bundle:
 
-1. Download `renderbase-mcp-{version}.mcpb` from the [releases page](https://github.com/renderbase/renderbase/releases)
+1. Download `rynko-mcp-{version}.mcpb` from the [releases page](https://github.com/rynko/rynko/releases)
 2. In Claude Desktop, go to **Settings** → **Extensions**
 3. Click **Install from file** and select the downloaded `.mcpb` file
 4. Enter your Personal Access Token when prompted
@@ -21,20 +21,20 @@ Or install from the `.mcpb` bundle:
 Install globally:
 
 ```bash
-npm install -g @renderbase/mcp-server
+npm install -g @rynko/mcp-server
 ```
 
 Or use directly with npx (recommended):
 
 ```bash
-npx @renderbase/mcp-server
+npx @rynko/mcp-server
 ```
 
 ## Manual Setup
 
 ### 1. Get a Personal Access Token (PAT)
 
-1. Log in to your [Renderbase Dashboard](https://app.renderbase.dev)
+1. Log in to your [Rynko Dashboard](https://app.rynko.dev)
 2. Go to **Settings** → **Personal Access Tokens**
 3. Click **Create Token**
 4. Enter a label (e.g., "Claude Desktop")
@@ -52,11 +52,11 @@ Add to your Claude Desktop configuration file:
 ```json
 {
   "mcpServers": {
-    "renderbase": {
+    "rynko": {
       "command": "npx",
-      "args": ["-y", "@renderbase/mcp-server"],
+      "args": ["-y", "@rynko/mcp-server"],
       "env": {
-        "RENDERBASE_USER_TOKEN": "pat_xxxxxxxxxxxxxxxx"
+        "RYNKO_USER_TOKEN": "pat_xxxxxxxxxxxxxxxx"
       }
     }
   }
@@ -65,7 +65,7 @@ Add to your Claude Desktop configuration file:
 
 ### 3. Restart Claude Desktop
 
-Close and reopen Claude Desktop. You should see "renderbase" in your available MCP servers.
+Close and reopen Claude Desktop. You should see "rynko" in your available MCP servers.
 
 ## Available Tools
 
@@ -110,7 +110,7 @@ Once configured, you can have natural conversations with Claude:
 >
 > **Claude:** I'll create that for you. Let me check your workspaces first...
 >
-> *[Creates template using Renderbase tools]*
+> *[Creates template using Rynko tools]*
 
 > **You:** Generate an invoice for Acme Corp with 3 line items totaling $1,500.
 >
@@ -122,8 +122,8 @@ Once configured, you can have natural conversations with Claude:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `RENDERBASE_USER_TOKEN` | Yes | Your Personal Access Token (starts with `pat_`) |
-| `RENDERBASE_API_URL` | No | Custom API URL (default: `https://api.renderbase.dev/api`) |
+| `RYNKO_USER_TOKEN` | Yes | Your Personal Access Token (starts with `pat_`) |
+| `RYNKO_API_URL` | No | Custom API URL (default: `https://api.rynko.dev/api`) |
 
 ## Security
 
@@ -143,7 +143,7 @@ Once configured, you can have natural conversations with Claude:
 ### "Failed to connect" error
 
 - Check your internet connection
-- Verify the Renderbase API is accessible
+- Verify the Rynko API is accessible
 - Try regenerating your PAT
 
 ### Claude Desktop not finding the server
@@ -154,14 +154,14 @@ Once configured, you can have natural conversations with Claude:
 
 ## Documentation
 
-- [Full Integration Guide](https://docs.renderbase.dev/integrations/mcp-integration)
-- [Template Schema Reference](https://docs.renderbase.dev/developer-guide/template-schema)
-- [API Documentation](https://docs.renderbase.dev/api/)
+- [Full Integration Guide](https://docs.rynko.dev/integrations/mcp-integration)
+- [Template Schema Reference](https://docs.rynko.dev/developer-guide/template-schema)
+- [API Documentation](https://docs.rynko.dev/api/)
 
 ## Support
 
-- **Email**: support@renderbase.dev
-- **Issues**: [GitHub Issues](https://github.com/renderbase/renderbase/issues)
+- **Email**: support@rynko.dev
+- **Issues**: [GitHub Issues](https://github.com/rynko/rynko/issues)
 
 ## Building from Source
 
@@ -176,13 +176,13 @@ npm run build:mcpb
 ```
 
 This creates:
-- `dist-mcpb/renderbase-mcp-{version}.mcpb` - The extension bundle
-- `dist-mcpb/renderbase-mcp-{version}.mcpb.sha256` - Checksum file
+- `dist-mcpb/rynko-mcp-{version}.mcpb` - The extension bundle
+- `dist-mcpb/rynko-mcp-{version}.mcpb.sha256` - Checksum file
 
 ### Bundle Contents
 
 ```
-renderbase-mcp-{version}.mcpb
+rynko-mcp-{version}.mcpb
 ├── manifest.json     # Extension metadata and configuration
 ├── server/           # Compiled server code
 │   ├── index.js

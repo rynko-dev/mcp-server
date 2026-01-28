@@ -1,18 +1,18 @@
 {
   "manifest_version": "0.3",
-  "name": "renderbase",
-  "display_name": "Renderbase - Document Generation",
+  "name": "rynko",
+  "display_name": "Rynko - Document Generation",
   "version": "1.0.0",
   "description": "Generate PDFs and Excel documents with AI. Connect your templates, draft new ones, and generate documents through natural conversation.",
   "author": {
-    "name": "Renderbase",
-    "email": "support@renderbase.dev",
-    "url": "https://www.renderbase.dev"
+    "name": "Rynko",
+    "email": "support@rynko.dev",
+    "url": "https://www.rynko.dev"
   },
-  "homepage": "https://www.renderbase.dev/mcp",
+  "homepage": "https://www.rynko.dev/mcp",
   "repository": {
     "type": "git",
-    "url": "https://github.com/renderbase/renderbase.git"
+    "url": "https://github.com/rynko/rynko.git"
   },
   "license": "MIT",
   "keywords": [
@@ -42,21 +42,21 @@
   },
   "user_config": {
     "properties": {
-      "RENDERBASE_USER_TOKEN": {
+      "RYNKO_USER_TOKEN": {
         "type": "string",
         "title": "Personal Access Token",
-        "description": "Your Renderbase Personal Access Token (PAT). Get one from: Settings → Personal Access Tokens in your Renderbase dashboard.",
+        "description": "Your Rynko Personal Access Token (PAT). Get one from: Settings → Personal Access Tokens in your Rynko dashboard.",
         "required": true,
         "secret": true,
         "pattern": "^pat_[a-zA-Z0-9]+$",
         "placeholder": "pat_xxxxxxxxxxxxxxxx"
       },
-      "RENDERBASE_API_URL": {
+      "RYNKO_API_URL": {
         "type": "string",
         "title": "API URL (Optional)",
-        "description": "Custom API URL. Leave empty for production (api.renderbase.dev).",
+        "description": "Custom API URL. Leave empty for production (api.rynko.dev).",
         "required": false,
-        "default": "https://api.renderbase.dev/api"
+        "default": "https://api.rynko.dev/api"
       }
     }
   },
@@ -82,12 +82,12 @@
     "network_access": true,
     "filesystem_access": false,
     "annotations": [
-      "Accesses Renderbase API with user-provided credentials",
+      "Accesses Rynko API with user-provided credentials",
       "Generates documents based on user templates and data",
       "Does not access local filesystem",
-      "All generated documents are stored in user's Renderbase account"
+      "All generated documents are stored in user's Rynko account"
     ]
   },
-  "privacy_policy": "https://www.renderbase.dev/privacy",
-  "terms_of_service": "https://www.renderbase.dev/terms"
+  "privacy_policy": "https://www.rynko.dev/privacy",
+  "terms_of_service": "https://www.rynko.dev/terms"
 }
