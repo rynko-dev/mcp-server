@@ -22,7 +22,7 @@ This guide covers how to submit the Rynko MCP server to the Claude Desktop Exten
 | Website | https://www.rynko.dev |
 | Documentation | https://docs.rynko.dev/integrations/mcp-integration |
 | Support Email | support@rynko.dev |
-| GitHub Repository | https://github.com/rynko/rynko |
+| GitHub Repository | https://github.com/rynko-dev/mcp-server |
 
 ### Safety Annotations
 
@@ -205,4 +205,4 @@ https://www.rynko.dev/mcp
 
 For submission questions:
 - Email: support@rynko.dev
-- GitHub: https://github.com/rynko/rynko/issues
+- GitHub: https://github.com/rynko-dev/mcp-server/issues

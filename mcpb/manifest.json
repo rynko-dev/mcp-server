@@ -12,7 +12,7 @@
   "homepage": "https://www.rynko.dev/mcp",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rynko/rynko.git"
+    "url": "https://github.com/rynko-dev/mcp-server.git"
   },
   "license": "MIT",
   "keywords": [

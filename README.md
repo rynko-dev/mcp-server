@@ -10,7 +10,7 @@ Rynko MCP server for Claude Desktop - manage templates and generate documents th
 
 Or install from the `.mcpb` bundle:
 
-1. Download `rynko-mcp-{version}.mcpb` from the [releases page](https://github.com/rynko/rynko/releases)
+1. Download `rynko-mcp-{version}.mcpb` from the [releases page](https://github.com/rynko-dev/mcp-server/releases)
 2. In Claude Desktop, go to **Settings** → **Extensions**
 3. Click **Install from file** and select the downloaded `.mcpb` file
 4. Enter your Personal Access Token when prompted
@@ -161,7 +161,7 @@ Once configured, you can have natural conversations with Claude:
 ## Support
 
 - **Email**: support@rynko.dev
-- **Issues**: [GitHub Issues](https://github.com/rynko/rynko/issues)
+- **Issues**: [GitHub Issues](https://github.com/rynko-dev/mcp-server/issues)
 
 ## Building from Source
 
