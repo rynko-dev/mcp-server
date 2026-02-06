@@ -36,6 +36,14 @@ cp "$PROJECT_DIR/mcpb/manifest.json" "$BUILD_DIR/manifest.json"
 echo "Copying server files..."
 cp -r "$PROJECT_DIR/dist/"* "$BUILD_DIR/server/"
 
+# Create minimal package.json for ESM support
+echo "Creating server package.json..."
+cat > "$BUILD_DIR/server/package.json" << 'PKGJSON'
+{
+  "type": "module"
+}
+PKGJSON
+
 # Copy icon if it exists
 if [ -f "$PROJECT_DIR/mcpb/icon.png" ]; then
   echo "Copying icon..."
