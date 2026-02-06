@@ -94,6 +94,13 @@ Close and reopen Claude Desktop. You should see "rynko" in your available MCP se
 | `parse_data_file` | Parse Excel or CSV data to JSON |
 | `map_variables` | Auto-map data columns to template variables |
 
+### Asset Tools
+
+| Tool | Description |
+|------|-------------|
+| `list_assets` | List image assets in your library |
+| `upload_asset` | Upload an image (base64 or URL) to your asset library |
+
 ### Generation Tools
 
 | Tool | Description |
