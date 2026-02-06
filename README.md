@@ -119,25 +119,91 @@ Close and reopen Claude Desktop. You should see "rynko" in your available MCP se
 
 ## Example Usage
 
-Once configured, you can have natural conversations with Claude:
+Once configured, you can have natural conversations with Claude. Here are detailed examples of how to use each tool:
 
-> **You:** Create an invoice template with company logo, client details, and line items table.
->
-> **Claude:** I'll create that for you. Let me check your workspaces first...
->
-> *[Creates template using Rynko tools]*
+### Example 1: List Templates and Generate a Document
 
-> **You:** Generate an invoice for Acme Corp with 3 line items totaling $1,500.
->
-> **Claude:** I'll generate that invoice now...
->
-> *[Generates PDF using your template]*
+**User Prompt:**
+> "Show me all the templates in my workspace and generate an invoice for Acme Corp"
 
-> **You:** Generate a professional invoice without watermark for my client presentation.
->
-> **Claude:** I'll generate a watermark-free invoice using your premium credits...
->
-> *[Generates PDF with use_credits: true]*
+**Expected Behavior:**
+1. Claude calls `list_workspaces` to find your workspaces
+2. Claude calls `list_templates` with your workspace ID
+3. Claude displays available templates
+4. Claude calls `get_template` to get the invoice template's variable schema
+5. Claude calls `generate_document` with the template ID and variables:
+   ```json
+   {
+     "workspace_id": "ws_xxx",
+     "template_id": "invoice-template",
+     "variables": {
+       "customerName": "Acme Corp",
+       "invoiceNumber": "INV-2024-001",
+       "items": [{"name": "Consulting", "quantity": 10, "price": 150}],
+       "total": 1500
+     },
+     "format": "pdf"
+   }
+   ```
+6. Claude returns the download URL for the generated PDF
+
+### Example 2: Preview Before Generating (Free)
+
+**User Prompt:**
+> "I want to test my new report template before using credits. Preview it with sample data."
+
+**Expected Behavior:**
+1. Claude calls `list_templates` to find the report template
+2. Claude calls `get_template` to understand required variables
+3. Claude calls `preview_template` with sample data:
+   ```json
+   {
+     "workspace_id": "ws_xxx",
+     "template_id": "monthly-report",
+     "variables": {
+       "reportTitle": "Q4 Sales Report",
+       "reportDate": "2024-12-31",
+       "metrics": [{"name": "Revenue", "value": "$125,000"}]
+     },
+     "format": "pdf",
+     "version": "draft"
+   }
+   ```
+4. Claude provides a preview URL (valid for 5 minutes, no credits used)
+5. User reviews the preview and confirms it looks correct
+
+### Example 3: Create a New Template from Scratch
+
+**User Prompt:**
+> "Create a professional certificate template with recipient name, course title, completion date, and a signature line"
+
+**Expected Behavior:**
+1. Claude calls `get_schema_reference` to understand the template schema format
+2. Claude calls `list_workspaces` to find where to create the template
+3. Claude calls `create_draft_template` with the full schema:
+   ```json
+   {
+     "workspace_id": "ws_xxx",
+     "name": "Course Certificate",
+     "description": "Professional certificate for course completion",
+     "format": "pdf",
+     "schema": {
+       "pages": [{
+         "id": "page-1",
+         "components": [
+           {"id": "title", "type": "heading", "props": {"level": 1, "text": "Certificate of Completion"}},
+           {"id": "recipient", "type": "rich-text", "props": {}, "content": "This certifies that <strong>{{recipientName}}</strong>..."}
+         ]
+       }]
+     },
+     "variables": [
+       {"name": "recipientName", "type": "string", "label": "Recipient Name"},
+       {"name": "courseTitle", "type": "string", "label": "Course Title"},
+       {"name": "completionDate", "type": "date", "label": "Completion Date"}
+     ]
+   }
+   ```
+4. Claude confirms the draft was created and provides a link to the visual designer for final adjustments
 
 ## Environment Variables
 
@@ -224,6 +290,28 @@ To submit to the Claude Desktop Extensions directory:
    - Terms of service URL
    - 3+ usage examples
    - Safety annotations (data access, network access)
+
+## Privacy Policy
+
+This extension connects to Rynko's API to manage templates and generate documents. By using this extension, you agree to Rynko's Privacy Policy.
+
+**Data Collection & Usage:**
+- **Authentication**: Your Personal Access Token is stored securely using the operating system's credential manager (Keychain on macOS, Credential Manager on Windows)
+- **Template Data**: Template schemas and variables are transmitted to Rynko's servers for document generation
+- **Document Variables**: Data you provide for document generation is processed on Rynko's servers to render documents
+- **Generated Documents**: Documents are stored temporarily (configurable retention period) and accessible via secure, time-limited URLs
+
+**Data Sharing:**
+- We do not sell or share your data with third parties
+- Data is processed solely for the purpose of generating your documents
+
+**Data Retention:**
+- Generated documents are retained based on your subscription tier's retention policy
+- You can delete documents at any time from your Rynko dashboard
+
+**Full Privacy Policy:** [https://www.rynko.dev/privacy](https://www.rynko.dev/privacy)
+
+**Contact:** For privacy-related inquiries, contact privacy@rynko.dev
 
 ## License
 

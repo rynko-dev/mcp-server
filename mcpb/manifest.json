@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "rynko",
   "display_name": "Rynko - Document Generation",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Generate PDFs and Excel documents with AI. Connect your templates, draft new ones, and generate documents through natural conversation.",
   "author": {
     "name": "Rynko",
@@ -15,6 +15,7 @@
     "url": "https://github.com/rynko-dev/mcp-server.git"
   },
   "license": "MIT",
+  "privacy_policies": ["https://www.rynko.dev/privacy"],
   "keywords": [
     "pdf",
     "document-generation",

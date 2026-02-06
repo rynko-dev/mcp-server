@@ -67,7 +67,7 @@ const client = new RynkoClient(RYNKO_USER_TOKEN, RYNKO_API_URL);
 const server = new Server(
   {
     name: 'rynko-mcp',
-    version: '1.0.8',
+    version: '1.0.9',
   },
   {
     capabilities: {
