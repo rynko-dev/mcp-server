@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "rynko",
   "display_name": "Rynko - Document Generation",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Generate PDFs and Excel documents with AI. Connect your templates, draft new ones, and generate documents through natural conversation.",
   "author": {
     "name": "Rynko",
@@ -24,70 +24,52 @@
     "reports",
     "automation"
   ],
-  "categories": [
-    "productivity",
-    "developer-tools",
-    "business"
-  ],
   "server": {
     "type": "node",
     "entry_point": "server/index.js",
     "mcp_config": {
       "command": "node",
       "args": ["${__dirname}/server/index.js"]
+    }
+  },
+  "user_config": [
+    {
+      "id": "RYNKO_USER_TOKEN",
+      "type": "string",
+      "title": "Personal Access Token",
+      "description": "Your Rynko Personal Access Token (PAT). Get one from: Settings → Personal Access Tokens in your Rynko dashboard.",
+      "required": true,
+      "secret": true
+    }
+  ],
+  "tools": [
+    {
+      "name": "list_workspaces",
+      "description": "List all workspaces you have access to"
     },
-    "runtime": {
-      "node": ">=18.0.0"
+    {
+      "name": "list_templates",
+      "description": "List templates in a workspace"
+    },
+    {
+      "name": "get_template",
+      "description": "Get template details and schema"
+    },
+    {
+      "name": "create_draft_template",
+      "description": "Create a new draft template"
+    },
+    {
+      "name": "preview_template",
+      "description": "Generate a preview document (free)"
+    },
+    {
+      "name": "generate_document",
+      "description": "Generate a production document"
+    },
+    {
+      "name": "get_job_status",
+      "description": "Check document generation status"
     }
-  },
-  "user_config": {
-    "properties": {
-      "RYNKO_USER_TOKEN": {
-        "type": "string",
-        "title": "Personal Access Token",
-        "description": "Your Rynko Personal Access Token (PAT). Get one from: Settings → Personal Access Tokens in your Rynko dashboard.",
-        "required": true,
-        "secret": true,
-        "pattern": "^pat_[a-zA-Z0-9]+$",
-        "placeholder": "pat_xxxxxxxxxxxxxxxx"
-      },
-      "RYNKO_API_URL": {
-        "type": "string",
-        "title": "API URL (Optional)",
-        "description": "Custom API URL. Leave empty for production (api.rynko.dev).",
-        "required": false,
-        "default": "https://api.rynko.dev/api"
-      }
-    }
-  },
-  "tools": {
-    "count": 13,
-    "examples": [
-      {
-        "name": "list_templates",
-        "description": "List all your document templates"
-      },
-      {
-        "name": "generate_pdf",
-        "description": "Generate a PDF from a template with your data"
-      },
-      {
-        "name": "draft_template",
-        "description": "Create a new template design with AI assistance"
-      }
-    ]
-  },
-  "safety": {
-    "data_access": "user_data",
-    "network_access": true,
-    "filesystem_access": false,
-    "annotations": [
-      "Accesses Rynko API with user-provided credentials",
-      "Generates documents based on user templates and data",
-      "Does not access local filesystem",
-      "All generated documents are stored in user's Rynko account"
-    ]
-  },
-  "privacy_policy": "https://www.rynko.dev/privacy",
-  "terms_of_service": "https://www.rynko.dev/terms"
+  ]
 }
