@@ -98,9 +98,24 @@ Close and reopen Claude Desktop. You should see "rynko" in your available MCP se
 
 | Tool | Description |
 |------|-------------|
-| `preview_template` | Generate a preview document |
-| `generate_document` | Generate a production document |
+| `preview_template` | Generate a preview document (free, no credits used) |
+| `generate_document` | Generate a production document (uses credits) |
 | `get_job_status` | Check document generation status |
+
+#### generate_document Parameters
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `workspace_id` | Yes | The workspace ID |
+| `template_id` | Yes | The template ID to generate from |
+| `variables` | Yes | Variable values for the document |
+| `format` | No | Output format: `pdf` (default) or `excel` |
+| `filename` | No | Custom filename (without extension) |
+| `use_draft` | No | Use draft version instead of published (default: false) |
+| `use_credits` | No | Use premium credits to generate without watermark (default: false) |
+| `metadata` | No | Custom key-value metadata for the document job |
+
+**Note on Watermarks:** Free tier documents include a watermark. Set `use_credits: true` to generate watermark-free documents using your purchased premium credits.
 
 ## Example Usage
 
@@ -117,6 +132,12 @@ Once configured, you can have natural conversations with Claude:
 > **Claude:** I'll generate that invoice now...
 >
 > *[Generates PDF using your template]*
+
+> **You:** Generate a professional invoice without watermark for my client presentation.
+>
+> **Claude:** I'll generate a watermark-free invoice using your premium credits...
+>
+> *[Generates PDF with use_credits: true]*
 
 ## Environment Variables
 
