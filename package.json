@@ -1,6 +1,6 @@
 {
   "name": "@rynko/mcp-server",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Rynko MCP server for Claude Desktop - manage templates and generate documents through natural conversation",
   "main": "dist/index.js",
   "bin": {
