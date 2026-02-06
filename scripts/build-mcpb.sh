@@ -20,6 +20,7 @@ echo "=========================================="
 echo "Cleaning previous builds..."
 rm -rf "$BUILD_DIR"
 rm -rf "$DIST_DIR"
+rm -rf "$PROJECT_DIR/dist-bundle"
 mkdir -p "$BUILD_DIR/server"
 mkdir -p "$DIST_DIR"
 
@@ -28,21 +29,17 @@ echo "Building TypeScript..."
 cd "$PROJECT_DIR"
 npm run build
 
+# Bundle with esbuild (includes all dependencies in single file)
+echo "Bundling with esbuild..."
+npm run bundle
+
 # Copy manifest
 echo "Copying manifest.json..."
 cp "$PROJECT_DIR/mcpb/manifest.json" "$BUILD_DIR/manifest.json"
 
-# Copy built server files
-echo "Copying server files..."
-cp -r "$PROJECT_DIR/dist/"* "$BUILD_DIR/server/"
-
-# Create minimal package.json for ESM support
-echo "Creating server package.json..."
-cat > "$BUILD_DIR/server/package.json" << 'PKGJSON'
-{
-  "type": "module"
-}
-PKGJSON
+# Copy the bundled server file (single file with all deps)
+echo "Copying bundled server..."
+cp "$PROJECT_DIR/dist-bundle/index.js" "$BUILD_DIR/server/index.js"
 
 # Copy icon if it exists
 if [ -f "$PROJECT_DIR/mcpb/icon.png" ]; then

@@ -1,6 +1,6 @@
 {
   "name": "@rynko/mcp-server",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "type": "module",
   "description": "Rynko MCP server for Claude Desktop - manage templates and generate documents through natural conversation",
   "main": "dist/index.js",
@@ -16,9 +16,10 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
+    "bundle": "node scripts/bundle.mjs",
     "prepublishOnly": "npm run build",
     "lint": "eslint src --ext .ts",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist dist-bundle",
     "build:mcpb": "bash scripts/build-mcpb.sh"
   },
   "keywords": [
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
+    "esbuild": "^0.20.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.0"
   }
