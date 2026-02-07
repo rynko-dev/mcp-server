@@ -40,7 +40,7 @@
     "RYNKO_USER_TOKEN": {
       "type": "string",
       "title": "Personal Access Token",
-      "description": "Your Rynko Personal Access Token (PAT). Get one from: Settings → Personal Access Tokens in your Rynko dashboard.",
+      "description": "Your Rynko Personal Access Token (PAT). Get one from: Settings → Personal Access Tokens in your Rynko dashboard (https://app.rynko.dev/settings?tab=tokens).",
       "required": true,
       "sensitive": true
     }
@@ -81,6 +81,10 @@
     {
       "name": "upload_asset",
       "description": "Upload an image to your asset library"
+    },
+    {
+      "name": "get_sdk_examples",
+      "description": "Get SDK code examples for programmatic integration"
     }
   ]
 }
