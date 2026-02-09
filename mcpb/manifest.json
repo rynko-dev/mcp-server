@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "rynko",
   "display_name": "Rynko - Document Generation",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Generate PDFs and Excel documents with AI. Connect your templates, draft new ones, and generate documents through natural conversation.",
   "author": {
     "name": "Rynko",
