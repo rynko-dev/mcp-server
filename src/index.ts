@@ -63,11 +63,45 @@ if (!RYNKO_USER_TOKEN.startsWith('pat_')) {
 // Initialize API client
 const client = new RynkoClient(RYNKO_USER_TOKEN, RYNKO_API_URL);
 
+// ── Session state: workspace selection ──
+// Per-session (per-process) workspace tracking. The AI must call
+// list_workspaces, confirm the choice with the user, then call
+// select_workspace before any workspace-scoped tool will execute.
+let selectedWorkspaceId: string | null = null;
+
+// Tools that do NOT require a workspace to be selected first.
+const WORKSPACE_FREE_TOOLS = new Set([
+  'list_workspaces',
+  'select_workspace',
+  'get_sdk_examples',
+  'parse_data_file',
+  'validate_schema',
+  'get_schema_reference',
+  'get_job_status',
+]);
+
+// The select_workspace tool definition — injected client-side, not from the backend.
+const SELECT_WORKSPACE_TOOL = {
+  name: 'select_workspace',
+  description:
+    'Select the workspace for this session. You MUST call list_workspaces first, present the options to the user, and let them choose before calling this tool. All subsequent workspace-scoped operations (templates, documents, assets) will require the workspace_id to match the selected workspace. Call this again to switch workspaces.',
+  inputSchema: {
+    type: 'object' as const,
+    properties: {
+      workspace_id: {
+        type: 'string',
+        description: 'The workspace ID chosen by the user from the list_workspaces results.',
+      },
+    },
+    required: ['workspace_id'],
+  },
+};
+
 // Create MCP server
 const server = new Server(
   {
     name: 'rynko-mcp',
-    version: '1.0.9',
+    version: '1.0.10',
   },
   {
     capabilities: {
@@ -85,15 +119,19 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   log('Handling ListTools request');
   try {
     const { tools } = await client.listTools();
-    log(`Returning ${tools.length} tools`);
 
-    return {
-      tools: tools.map((tool) => ({
+    // Inject the select_workspace tool at the start
+    const allTools = [
+      SELECT_WORKSPACE_TOOL,
+      ...tools.map((tool) => ({
         name: tool.name,
         description: tool.description,
         inputSchema: tool.inputSchema,
       })),
-    };
+    ];
+
+    log(`Returning ${allTools.length} tools (${tools.length} from backend + select_workspace)`);
+    return { tools: allTools };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     log(`ERROR in ListTools: ${message}`);
@@ -108,6 +146,65 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
   log(`Handling CallTool request: ${name}`);
 
+  // ── Handle select_workspace locally ──
+  if (name === 'select_workspace') {
+    const workspaceId = (args as Record<string, unknown>)?.workspace_id as string | undefined;
+    if (!workspaceId) {
+      return {
+        content: [{ type: 'text' as const, text: 'Error: workspace_id is required.' }],
+        isError: true,
+      };
+    }
+    selectedWorkspaceId = workspaceId;
+    log(`Workspace selected: ${workspaceId}`);
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: `Workspace ${workspaceId} selected for this session. You can now use template, document, and asset tools with this workspace.`,
+        },
+      ],
+      isError: false,
+    };
+  }
+
+  // ── Enforce workspace selection for workspace-scoped tools ──
+  if (!WORKSPACE_FREE_TOOLS.has(name)) {
+    if (!selectedWorkspaceId) {
+      log(`BLOCKED ${name}: no workspace selected`);
+      return {
+        content: [
+          {
+            type: 'text' as const,
+            text: 'Error: No workspace selected. Before using this tool you must:\n\n'
+              + '1. Call list_workspaces to see available workspaces\n'
+              + '2. Ask the user which workspace to use\n'
+              + '3. Call select_workspace with the chosen workspace_id\n\n'
+              + 'Then retry this operation.',
+          },
+        ],
+        isError: true,
+      };
+    }
+
+    // Validate that workspace_id in args matches the selected workspace
+    const passedWorkspaceId = (args as Record<string, unknown>)?.workspace_id as string | undefined;
+    if (passedWorkspaceId && passedWorkspaceId !== selectedWorkspaceId) {
+      log(`BLOCKED ${name}: workspace_id mismatch (passed=${passedWorkspaceId}, selected=${selectedWorkspaceId})`);
+      return {
+        content: [
+          {
+            type: 'text' as const,
+            text: `Error: workspace_id "${passedWorkspaceId}" does not match the selected workspace "${selectedWorkspaceId}". `
+              + 'Call select_workspace with the new workspace_id first if you want to switch workspaces.',
+          },
+        ],
+        isError: true,
+      };
+    }
+  }
+
+  // ── Forward to backend ──
   try {
     const result = await client.callTool(name, args || {});
     log(`Tool ${name} completed successfully`);
