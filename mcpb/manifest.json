@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "rynko",
   "display_name": "Rynko - Document Generation",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Generate PDFs and Excel documents with AI. Connect your templates, draft new ones, and generate documents through natural conversation.",
   "author": {
     "name": "Rynko",
@@ -49,6 +49,10 @@
     {
       "name": "list_workspaces",
       "description": "List all workspaces you have access to"
+    },
+    {
+      "name": "select_workspace",
+      "description": "Select workspace for this session (required before template/document operations)"
     },
     {
       "name": "list_templates",

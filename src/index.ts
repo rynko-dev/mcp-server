@@ -101,7 +101,7 @@ const SELECT_WORKSPACE_TOOL = {
 const server = new Server(
   {
     name: 'rynko-mcp',
-    version: '1.0.10',
+    version: '1.0.17',
   },
   {
     capabilities: {
