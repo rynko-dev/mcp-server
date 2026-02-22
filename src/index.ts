@@ -63,16 +63,16 @@ if (!RYNKO_USER_TOKEN.startsWith('pat_')) {
 // Initialize API client
 const client = new RynkoClient(RYNKO_USER_TOKEN, RYNKO_API_URL);
 
-// ── Session state: workspace selection ──
-// Per-session (per-process) workspace tracking. The AI must call
+// ── Session state: environment selection ──
+// Per-session (per-process) environment tracking. The AI must call
 // list_workspaces, confirm the choice with the user, then call
-// select_workspace before any workspace-scoped tool will execute.
-let selectedWorkspaceId: string | null = null;
+// select_environment before any environment-scoped tool will execute.
+let selectedEnvironmentId: string | null = null;
 
-// Tools that do NOT require a workspace to be selected first.
-const WORKSPACE_FREE_TOOLS = new Set([
+// Tools that do NOT require an environment to be selected first.
+const ENVIRONMENT_FREE_TOOLS = new Set([
   'list_workspaces',
-  'select_workspace',
+  'select_environment',
   'get_sdk_examples',
   'parse_data_file',
   'validate_schema',
@@ -80,17 +80,17 @@ const WORKSPACE_FREE_TOOLS = new Set([
   'get_job_status',
 ]);
 
-// The select_workspace tool definition — injected client-side, not from the backend.
-const SELECT_WORKSPACE_TOOL = {
-  name: 'select_workspace',
+// The select_environment tool definition — injected client-side, not from the backend.
+const SELECT_ENVIRONMENT_TOOL = {
+  name: 'select_environment',
   description:
-    'Select the workspace for this session. You MUST call list_workspaces first, present the options to the user, and let them choose before calling this tool. All subsequent workspace-scoped operations (templates, documents, assets) will require the workspace_id to match the selected workspace. Call this again to switch workspaces.',
+    'Select the environment for this session. You MUST call list_workspaces first, present the options to the user, and let them choose before calling this tool. All subsequent environment-scoped operations (templates, documents, assets) will require the workspace_id to match the selected environment. Call this again to switch environments.',
   inputSchema: {
     type: 'object' as const,
     properties: {
       workspace_id: {
         type: 'string',
-        description: 'The workspace ID chosen by the user from the list_workspaces results.',
+        description: 'The environment ID chosen by the user from the list_workspaces results.',
       },
     },
     required: ['workspace_id'],
@@ -120,9 +120,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   try {
     const { tools } = await client.listTools();
 
-    // Inject the select_workspace tool at the start
+    // Inject the select_environment tool at the start
     const allTools = [
-      SELECT_WORKSPACE_TOOL,
+      SELECT_ENVIRONMENT_TOOL,
       ...tools.map((tool) => ({
         name: tool.name,
         description: tool.description,
@@ -130,7 +130,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       })),
     ];
 
-    log(`Returning ${allTools.length} tools (${tools.length} from backend + select_workspace)`);
+    log(`Returning ${allTools.length} tools (${tools.length} from backend + select_environment)`);
     return { tools: allTools };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -146,8 +146,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
   log(`Handling CallTool request: ${name}`);
 
-  // ── Handle select_workspace locally ──
-  if (name === 'select_workspace') {
+  // ── Handle select_environment locally ──
+  if (name === 'select_environment') {
     const workspaceId = (args as Record<string, unknown>)?.workspace_id as string | undefined;
     if (!workspaceId) {
       return {
@@ -155,31 +155,31 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         isError: true,
       };
     }
-    selectedWorkspaceId = workspaceId;
-    log(`Workspace selected: ${workspaceId}`);
+    selectedEnvironmentId = workspaceId;
+    log(`Environment selected: ${workspaceId}`);
     return {
       content: [
         {
           type: 'text' as const,
-          text: `Workspace ${workspaceId} selected for this session. You can now use template, document, and asset tools with this workspace.`,
+          text: `Environment ${workspaceId} selected for this session. You can now use template, document, and asset tools with this environment.`,
         },
       ],
       isError: false,
     };
   }
 
-  // ── Enforce workspace selection for workspace-scoped tools ──
-  if (!WORKSPACE_FREE_TOOLS.has(name)) {
-    if (!selectedWorkspaceId) {
-      log(`BLOCKED ${name}: no workspace selected`);
+  // ── Enforce environment selection for environment-scoped tools ──
+  if (!ENVIRONMENT_FREE_TOOLS.has(name)) {
+    if (!selectedEnvironmentId) {
+      log(`BLOCKED ${name}: no environment selected`);
       return {
         content: [
           {
             type: 'text' as const,
-            text: 'Error: No workspace selected. Before using this tool you must:\n\n'
-              + '1. Call list_workspaces to see available workspaces\n'
-              + '2. Ask the user which workspace to use\n'
-              + '3. Call select_workspace with the chosen workspace_id\n\n'
+            text: 'Error: No environment selected. Before using this tool you must:\n\n'
+              + '1. Call list_workspaces to see available environments\n'
+              + '2. Ask the user which environment to use\n'
+              + '3. Call select_environment with the chosen workspace_id\n\n'
               + 'Then retry this operation.',
           },
         ],
@@ -187,16 +187,16 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       };
     }
 
-    // Validate that workspace_id in args matches the selected workspace
+    // Validate that workspace_id in args matches the selected environment
     const passedWorkspaceId = (args as Record<string, unknown>)?.workspace_id as string | undefined;
-    if (passedWorkspaceId && passedWorkspaceId !== selectedWorkspaceId) {
-      log(`BLOCKED ${name}: workspace_id mismatch (passed=${passedWorkspaceId}, selected=${selectedWorkspaceId})`);
+    if (passedWorkspaceId && passedWorkspaceId !== selectedEnvironmentId) {
+      log(`BLOCKED ${name}: environment_id mismatch (passed=${passedWorkspaceId}, selected=${selectedEnvironmentId})`);
       return {
         content: [
           {
             type: 'text' as const,
-            text: `Error: workspace_id "${passedWorkspaceId}" does not match the selected workspace "${selectedWorkspaceId}". `
-              + 'Call select_workspace with the new workspace_id first if you want to switch workspaces.',
+            text: `Error: environment_id "${passedWorkspaceId}" does not match the selected environment "${selectedEnvironmentId}". `
+              + 'Call select_environment with the new workspace_id first if you want to switch environments.',
           },
         ],
         isError: true,

@@ -69,18 +69,18 @@ Close and reopen Claude Desktop. You should see "rynko" in your available MCP se
 
 ## Available Tools
 
-### Workspace Tools
+### Environment Tools
 
 | Tool | Description |
 |------|-------------|
-| `list_workspaces` | List all workspaces you have access to |
-| `get_workspace` | Get details of a specific workspace |
+| `list_workspaces` | List all environments you have access to |
+| `get_workspace` | Get details of a specific environment |
 
 ### Template Tools
 
 | Tool | Description |
 |------|-------------|
-| `list_templates` | List templates in a workspace |
+| `list_templates` | List templates in an environment |
 | `get_template` | Get template details and schema |
 | `create_draft_template` | Create a new draft template |
 | `update_draft_template` | Update a draft template |
@@ -113,7 +113,7 @@ Close and reopen Claude Desktop. You should see "rynko" in your available MCP se
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| `workspace_id` | Yes | The workspace ID |
+| `workspace_id` | Yes | The environment ID |
 | `template_id` | Yes | The template ID to generate from |
 | `variables` | Yes | Variable values for the document |
 | `format` | No | Output format: `pdf` (default) or `excel` |
@@ -131,11 +131,11 @@ Once configured, you can have natural conversations with Claude. Here are detail
 ### Example 1: List Templates and Generate a Document
 
 **User Prompt:**
-> "Show me all the templates in my workspace and generate an invoice for Acme Corp"
+> "Show me all the templates in my environment and generate an invoice for Acme Corp"
 
 **Expected Behavior:**
-1. Claude calls `list_workspaces` to find your workspaces
-2. Claude calls `list_templates` with your workspace ID
+1. Claude calls `list_workspaces` to find your environments
+2. Claude calls `list_templates` with your environment ID
 3. Claude displays available templates
 4. Claude calls `get_template` to get the invoice template's variable schema
 5. Claude calls `generate_document` with the template ID and variables:
@@ -186,7 +186,7 @@ Once configured, you can have natural conversations with Claude. Here are detail
 
 **Expected Behavior:**
 1. Claude calls `get_schema_reference` to understand the template schema format
-2. Claude calls `list_workspaces` to find where to create the template
+2. Claude calls `list_workspaces` to find available environments
 3. Claude calls `create_draft_template` with the full schema:
    ```json
    {
@@ -223,7 +223,7 @@ Once configured, you can have natural conversations with Claude. Here are detail
 
 - **Token Expiry**: PATs expire after max 30 days
 - **Draft-Only**: Templates created via MCP are drafts until manually published
-- **Audit Logging**: All operations are logged in your team's activity feed
+- **Audit Logging**: All operations are logged in your project's activity feed
 - **Revocable**: Instantly revoke tokens from your dashboard
 
 ## Troubleshooting
