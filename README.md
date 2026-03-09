@@ -1,5 +1,12 @@
 # @rynko/mcp-server
 
+> **⚠️ DEPRECATED**: This standalone stdio MCP server is deprecated. All AI tools (Claude Desktop, Cursor, Windsurf, VS Code, Zed, Claude Code) now support remote MCP via HTTP transport. Use the remote server URL instead:
+>
+> **Render MCP:** `https://api.rynko.dev/api/mcp-documents`
+> **Flow MCP:** `https://api.rynko.dev/api/flow/mcp`
+>
+> The remote server provides access to the latest tools, requires no local installation, and works across all platforms. See the [setup guide](https://docs.rynko.dev/integrations/mcp-render) for configuration instructions.
+
 Rynko MCP server for Claude Desktop - manage templates and generate documents through natural conversation.
 
 ## Installation
